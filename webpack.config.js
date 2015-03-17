@@ -1,10 +1,13 @@
+var path = require('path');
+
 module.exports = {
     entry: {
-        main: './app/main.js'
+        main: path.resolve('./app/main.js')
     },
     output: {
-        path: './public',
-        filename: 'app.js'
+        path: path.resolve('./public'),
+        filename: 'app.js',
+        publicPath: '/public/'
     },
     module: {
         loaders: [
