@@ -7,15 +7,11 @@ var express = require('express'),
     path = require('path'),
     webpackDevMiddleware = require("webpack-dev-middleware"),
     webpack = require("webpack"),
-    webpackConfig = require('./webpack.config');
+    webpackConfig = require('./webpack.config'),
+    geocoder = require('./lib/geocoder'),
+    forecast = require('./lib/forecast-io');
 
-var isDev = config.util.getEnv('NODE_ENV') === 'development';
-
-if (isDev) {
-    webpackConfig.devtool = 'eval';
-}
-
-var compiler = webpack(webpackConfig),
+var isDev = config.util.getEnv('NODE_ENV') === 'development',
     app = express();
 
 app.get('/', function(req, res) {
@@ -26,13 +22,31 @@ app.get('/', function(req, res) {
     });
 });
 
-app.get('/api/forecast/:state/:city', function(req, res) {
+app.get('/api/forecast/:address', function(req, res) {
+    geocoder(req.params.address)
+        .then(function(resp) {
+            console.log(resp);
 
+            var latlng = resp.results[0].geometry.location;
+
+            return forecast.forLatLng(latlng.lat, latlng.lng);
+        })
+        .then(function(resp) {
+            console.log(resp);
+            res.json(resp);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
 });
 
-app.use(webpackDevMiddleware(compiler, {
-    // options
-}));
+if (isDev) {
+    webpackConfig.devtool = 'eval';
+
+    app.use(webpackDevMiddleware(webpack(webpackConfig), {
+        noInfo: true
+    }));
+}
 
 app.use(express.static(path.resolve('./public')));
 
