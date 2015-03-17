@@ -26,6 +26,10 @@ app.get('/', function(req, res) {
     });
 });
 
+app.get('/api/forecast/:state/:city', function(req, res) {
+
+});
+
 app.use(webpackDevMiddleware(compiler, {
     // options
 }));
