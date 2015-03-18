@@ -25,7 +25,7 @@ function getForecastForLocation(address) {
 
     return geocoder.geocodeAddress(address)
         .then(function(resp) {
-            var latlng = resp.results[0].geometry.location;
+            var latlng = resp.geometry.location;
             data.location = resp;
             return forecast.forLatLng(latlng.lat, latlng.lng);
         })
@@ -37,25 +37,18 @@ function getForecastForLocation(address) {
 
 app.get('/', function(req, res) {
     if (req.query.address) {
-        getForecastForLocation(req.query.address).then(function(data) {
-            renderPage(res, data);
-        });
+        getForecastForLocation(req.query.address)
+            .then(function(data) {
+                renderPage(res, data);
+            });
     } else {
         renderPage(res, {});
     }
 });
 
 app.get('/api/forecast', function(req, res) {
-    var data = {};
-
-    geocoder(req.params.address)
-        .then(function(resp) {
-            var latlng = resp.results[0].geometry.location;
-            data.location = resp;
-            return forecast.forLatLng(latlng.lat, latlng.lng);
-        })
-        .then(function(resp) {
-            data.forecast = resp;
+    getForecastForLocation(req.query.address)
+        .then(function(data) {
             res.json(data);
         })
         .catch(function(err) {
@@ -67,7 +60,7 @@ if (isDev) {
     webpackConfig.devtool = 'eval';
 
     app.use(webpackDevMiddleware(webpack(webpackConfig), {
-        //noInfo: true
+        stats: false
     }));
 }
 
