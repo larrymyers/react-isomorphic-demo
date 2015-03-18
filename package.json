@@ -9,9 +9,6 @@
   "author": "Larry Myers <larry@larrymyers.com>",
   "license": "MIT",
   "dependencies": {
-    "babel": "^4.7.13",
-    "babel-core": "^4.7.12",
-    "babel-loader": "^4.2.0",
     "bluebird": "^2.9.14",
     "cheerio": "^0.18.0",
     "config": "^1.12.0",
@@ -19,7 +16,11 @@
     "react": "^0.13.1",
     "react-mini-router": "^1.1.1",
     "request": "^2.53.0",
-    "superagent": "^1.1.0",
+    "superagent": "^1.1.0"
+  },
+  "devDependencies": {
+    "jsx-loader": "^0.12.2",
+    "nodemon": "^1.3.7",
     "webpack": "^1.7.3",
     "webpack-dev-middleware": "^1.0.11"
   }

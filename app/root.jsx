@@ -1,25 +1,24 @@
 var React = require('react'),
-    RouterMixin = require('react-mini-router').RouterMixin;
+    RouterMixin = require('react-mini-router').RouterMixin,
+    Forecast = require('./forecast.jsx'),
+    ChangeLocation = require('./change-location.jsx');
 
-export default React.createClass({
+var Root = React.createClass({
 
     mixins: [RouterMixin],
 
     routes: {
-        '/': 'index',
-        '/forecast/:state/:city': 'showForecast'
+        '/': 'showForecast'
     },
 
-    render() {
+    render: function() {
         return this.renderCurrentRoute();
     },
 
-    index() {
-        return <div>Hello World</div>;
-    },
-
-    showForecast() {
-
+    showForecast: function(params) {
+        return <div>{JSON.stringify(params)}</div>;
     }
 
 });
+
+module.exports = Root;
