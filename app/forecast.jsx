@@ -3,7 +3,9 @@ var React = require('react');
 var Forecast = React.createClass({
 
     render: function() {
-        return <div>Forecast</div>;
+        var forecast = this.props.forecast;
+
+        return <div>{forecast.currently.temperature}</div>;
     }
 
 });

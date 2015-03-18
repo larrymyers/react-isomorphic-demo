@@ -1,3 +1,5 @@
+require('node-jsx').install({ extension: '.jsx' });
+
 var express = require('express'),
     cheerio = require('cheerio'),
     config = require('config'),
@@ -7,7 +9,9 @@ var express = require('express'),
     webpack = require("webpack"),
     webpackConfig = require('./webpack.config'),
     geocoder = require('./lib/geocoder'),
-    forecast = require('./lib/forecast-io');
+    forecast = require('./lib/forecast-io'),
+    React = require('react'),
+    Root = React.createFactory(require('./app/root.jsx'));
 
 var isDev = config.util.getEnv('NODE_ENV') === 'development',
     app = express();
@@ -15,6 +19,7 @@ var isDev = config.util.getEnv('NODE_ENV') === 'development',
 function renderPage(res, data) {
     fs.readFile(path.resolve('./public/index.html'), 'utf8', function(err, html) {
         var $ = cheerio.load(html);
+        $('#root').html(React.renderToString(Root(data)));
         $('#app-data').text('APP_DATA=' + JSON.stringify(data));
         res.send($.html());
     });
