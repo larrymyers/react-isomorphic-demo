@@ -1,5 +1,6 @@
 var React = require('react'),
-    Forecast = require('./forecast.jsx'),
+    Forecast = require('../lib/forecast'),
+    ForecastView = require('./forecast.jsx'),
     ChangeLocation = require('./change-location.jsx'),
     querystring = require('querystring'),
     request = require('superagent');
@@ -11,7 +12,7 @@ var Root = React.createClass({
 
         return {
             location: props.location,
-            forecast: props.forecast
+            forecast: new Forecast(props.forecast)
         };
     },
 
@@ -29,7 +30,7 @@ var Root = React.createClass({
         return (
             <div>
                 <ChangeLocation location={state.location} onUpdate={this.onChangeLocation}/>
-                <Forecast forecast={state.forecast}/>
+                <ForecastView forecast={state.forecast}/>
             </div>
         );
     },

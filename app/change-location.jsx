@@ -2,14 +2,29 @@ var React = require('react');
 
 var ChangeLocation = React.createClass({
 
-    onSubmit: function() {
+    onSubmit: function(evt) {
+        evt.preventDefault();
 
-        this.props.onUpdate('');
+        var input = this.refs.addressInput.getDOMNode(),
+            text = input.value;
+
+        input.value = '';
+
+        this.props.onUpdate(text);
     },
 
     render: function() {
+        var address = '';
+
+        if (this.props.location) {
+            address = this.props.location.formatted_address;
+        }
+
         return (
-            <form>{this.props.location.formatted_address}</form>
+            <form onSubmit={this.onSubmit}>
+                <input type="text" ref="addressInput" defaultValue=""/>
+                <button type="submit">Get Forecast</button>
+            </form>
         );
     }
 
