@@ -6,15 +6,15 @@ var Forecast = React.createClass({
         var forecast = this.props.forecast,
             current;
 
-        if (!forecast) {
+        if (!forecast || !forecast.currently) {
             return <div>Choose a city!</div>;
         }
 
         current = forecast.currently;
 
         return (
-            <div>
-                <div>{current.temperature}&deg;</div>
+            <div className="forecast">
+                <div className="current-temp">Currently {current.temperature}&deg;</div>
                 <div>
                     <dl>
                         <dt>Feels Like</dt><dd>{current.apparentTemperature}&deg;</dd>

@@ -39,7 +39,7 @@ var Root = React.createClass({
         var self = this;
 
         request.get('/api/forecast').query({ address: address }).end(function(err, res) {
-            self.setState(res.body);
+            self.setState(new Forecast(res.body));
         });
     },
 
