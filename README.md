@@ -2,6 +2,12 @@ A demo app for the Chicago React Meetup on March 24, 2015.
 
 http://www.meetup.com/React-Chicago/events/221186137/
 
+## Setup
+
+1. Sign up for a [forecast.io](https://developer.forecast.io/) API key
+2. Sign up for a [Google Geocoding](https://developers.google.com/maps/documentation/geocoding/) API key
+3. Put your API keys in the `config/default.json` file.
+
 ## Install
 
     npm install
@@ -10,6 +16,3 @@ http://www.meetup.com/React-Chicago/events/221186137/
 Open browser to:
 
     http://localhost:4000
-
-## Setup
-
