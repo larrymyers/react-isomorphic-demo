@@ -1,0 +1,8 @@
+{
+    "forecast": {
+        "key": "replace with forecast.io api key"
+    },
+    "geocoder": {
+        "key": "replace with google geocoder api key"
+    }
+}
