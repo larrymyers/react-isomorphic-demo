@@ -2,20 +2,23 @@ require('node-jsx').install({ extension: '.jsx' });
 
 var express = require('express'),
     cheerio = require('cheerio'),
-    config = require('config'),
     fs = require('fs'),
     path = require('path'),
-    webpackDevMiddleware = require('webpack-dev-middleware'),
-    webpack = require("webpack"),
-    webpackConfig = require('./webpack.config'),
     geocoder = require('./lib/geocoder'),
     forecast = require('./lib/forecast-io'),
     React = require('react'),
     Root = React.createFactory(require('./app/root.jsx'));
 
-var isDev = config.util.getEnv('NODE_ENV') === 'development',
-    app = express();
+var app = express();
 
+/**
+ * Inserts the html markup and json representation of the given data
+ * for the React application. Cheerio is used here to demonstrate
+ * that you don't need a template language to do server side rendering.
+ *
+ * @param {Response} res  the express response
+ * @param {Object} data  app data to serialize
+ */
 function renderPage(res, data) {
     fs.readFile(path.resolve('./public/index.html'), 'utf8', function(err, html) {
         var $ = cheerio.load(html);
@@ -25,8 +28,19 @@ function renderPage(res, data) {
     });
 }
 
+/**
+ * A simple unified service that returns both the geocoded
+ * address and the weather forecast.
+ *
+ * @param {string} address
+ * @returns {Promise}
+ */
 function getForecastForLocation(address) {
     var data = {};
+
+    if (!address || address.length === 0) {
+        return Promise.value(data);
+    }
 
     return geocoder.geocodeAddress(address)
         .then(function(resp) {
@@ -40,10 +54,14 @@ function getForecastForLocation(address) {
         });
 }
 
-app.get('/', function(req, res) {
-    var address = req.query.address || 'Chicago, IL';
+/**
+ * The Page and API endpoints for the application. Note
+ * that both are almost identical, they are just different
+ * representations of the same service call.
+ */
 
-    getForecastForLocation(address)
+app.get('/', function indexHandler(req, res) {
+    getForecastForLocation(req.query.address )
         .then(function(data) {
             renderPage(res, data);
         })
@@ -52,7 +70,7 @@ app.get('/', function(req, res) {
         });
 });
 
-app.get('/api/forecast', function(req, res) {
+app.get('/api/forecast', function getForecastHandler(req, res) {
     getForecastForLocation(req.query.address)
         .then(function(data) {
             res.json(data);
@@ -61,15 +79,5 @@ app.get('/api/forecast', function(req, res) {
             res.status(500).json(err);
         });
 });
-
-if (isDev) {
-    webpackConfig.devtool = 'eval';
-
-    app.use(webpackDevMiddleware(webpack(webpackConfig), {
-        stats: false
-    }));
-}
-
-app.use(express.static(path.resolve('./public')));
 
 module.exports = app;
