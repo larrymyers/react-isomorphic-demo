@@ -2,6 +2,7 @@ require('node-jsx').install({ extension: '.jsx' });
 
 var express = require('express'),
     cheerio = require('cheerio'),
+    Promise = require('bluebird'),
     fs = require('fs'),
     path = require('path'),
     geocoder = require('./lib/geocoder'),
@@ -39,7 +40,7 @@ function getForecastForLocation(address) {
     var data = {};
 
     if (!address || address.length === 0) {
-        return Promise.value(data);
+        return Promise.resolve(data);
     }
 
     return geocoder.geocodeAddress(address)

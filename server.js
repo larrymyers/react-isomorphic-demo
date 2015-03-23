@@ -1,4 +1,5 @@
 var app = require('./index'),
+    path = require('path'),
     express = require('express'),
     config = require('config'),
     webpackDevMiddleware = require('webpack-dev-middleware'),
