@@ -5,6 +5,12 @@ var React = require('react'),
     querystring = require('querystring'),
     request = require('superagent');
 
+/**
+ * The Root component for the React application. Uses the HTML5 History API
+ * to handle state changes via navigation.
+ *
+ * @type {ReactComponent}
+ */
 var Root = React.createClass({
 
     getInitialState: function() {
