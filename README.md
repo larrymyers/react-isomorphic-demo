@@ -1,6 +1,7 @@
 A demo app for the Chicago React Meetup on March 24, 2015.
 
 http://www.meetup.com/React-Chicago/events/221186137/
+http://www.slideshare.net/larrymyers717/isomorphic-web-apps-with-react
 
 ## Setup
 
