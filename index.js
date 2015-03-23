@@ -41,14 +41,15 @@ function getForecastForLocation(address) {
 }
 
 app.get('/', function(req, res) {
-    if (req.query.address) {
-        getForecastForLocation(req.query.address)
-            .then(function(data) {
-                renderPage(res, data);
-            });
-    } else {
-        renderPage(res, {});
-    }
+    var address = req.query.address || 'Chicago, IL';
+
+    getForecastForLocation(address)
+        .then(function(data) {
+            renderPage(res, data);
+        })
+        .catch(function(err) {
+            res.status(500).send('./public/500.html');
+        });
 });
 
 app.get('/api/forecast', function(req, res) {
