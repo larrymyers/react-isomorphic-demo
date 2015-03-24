@@ -58,6 +58,7 @@ var Root = React.createClass({
 
     onChangeLocation: function(address) {
         window.history.pushState(null, '', '/?' + querystring.stringify({ address: address }));
+
         this.getForecast(address);
     }
 

@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js -e \"js jsx\"",
+    "start-prod": "NODE_ENV=production node server.js",
+    "build": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/larrymyers/react-isomorphic-demo.git"
   },
   "author": "Larry Myers <larry@larrymyers.com>",
   "license": "MIT",

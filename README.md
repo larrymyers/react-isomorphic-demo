@@ -9,7 +9,7 @@ http://www.slideshare.net/larrymyers717/isomorphic-web-apps-with-react
 2. Sign up for a [Google Geocoding](https://developers.google.com/maps/documentation/geocoding/) API key
 3. Put your API keys in the `config/default.json` file.
 
-## Install
+## Dev Mode
 
     npm install
     npm start
@@ -17,3 +17,9 @@ http://www.slideshare.net/larrymyers717/isomorphic-web-apps-with-react
 Open browser to:
 
     http://localhost:4000
+
+## Prod Mode
+
+	npm install
+	npm run build
+	npm run start-prod

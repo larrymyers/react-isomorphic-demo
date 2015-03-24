@@ -1,4 +1,4 @@
-require('node-jsx').install({ extension: '.jsx' });
+require('node-jsx').install({ extension: '.jsx' }); // does the jsx transform within the require call
 
 var express = require('express'),
     cheerio = require('cheerio'),
@@ -23,15 +23,17 @@ var app = express();
 function renderPage(res, data) {
     fs.readFile(path.resolve('./public/index.html'), 'utf8', function(err, html) {
         var $ = cheerio.load(html);
+
         $('#root').html(React.renderToString(Root(data)));
         $('#app-data').text('APP_DATA=' + JSON.stringify(data));
+
         res.send($.html());
     });
 }
 
 /**
  * A simple unified service that returns both the geocoded
- * address and the weather forecast.
+ * address and the weather forecast for the address.
  *
  * @param {string} address
  * @returns {Promise}
