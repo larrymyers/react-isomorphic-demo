@@ -7,7 +7,7 @@
     "start": "nodemon server.js -e \"js jsx\"",
     "start-prod": "NODE_ENV=production node server.js",
     "build": "webpack -p",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "jsx-loader": "^0.12.2",
+    "mocha": "^2.2.1",
     "nodemon": "^1.3.7",
     "webpack": "^1.7.3",
     "webpack-dev-middleware": "^1.0.11"
